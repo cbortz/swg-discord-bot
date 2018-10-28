@@ -5,7 +5,8 @@
         "Username": "SWGAccount",
         "Password": "SWGPassword",
         "Character": "Discord",
-        "ChatRoom": "Genchat"
+        "ChatRoom": "Genchat",
+        "SoftLogInterval": null
     },
     "Discord": {
         "BotName": "RoC-Bot",

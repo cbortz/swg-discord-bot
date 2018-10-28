@@ -17,6 +17,8 @@ module.exports.recvChat = function(message, player) {}
 module.exports.serverDown = function() {}
 module.exports.serverUp = function() {}
 module.exports.reconnected = function() {}
+module.exports.queueSoftLog = function() {}
+module.exports.softLog = function() {}
 module.exports.sendTell = function(player, message) {
     if (!module.exports.isConnected) return;
     console.log("sending tell to: " + player + ": " + message);

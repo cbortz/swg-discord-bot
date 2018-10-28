@@ -3,9 +3,10 @@ const SWG = require('./swgclient');
 const config = require('./config');
 SWG.login(config.SWG);
 
-var client, server, notif, chat, notifRole;
+var client, server, notif, chat, notifRole, softLogInterval;
 function discordBot() {
     client = new Discord.Client();
+    softLogInterval = config.SWG.SoftLogInterval;
 
     client.on('message', message => {
         if (message.content.startsWith('!server')) {
@@ -56,6 +57,7 @@ SWG.serverUp = function() {
 
 SWG.reconnected = function() {
     if (chat) chat.send("chat bot reconnected");
+    if (softLogInterval) SWG.queueSoftLog();
 }
 
 SWG.recvChat = function(message, player) {
@@ -67,6 +69,14 @@ SWG.recvChat = function(message, player) {
 SWG.recvTell = function(from, message) {
     console.log("received tell from: " + from + ": " + message);
     if (from != config.SWG.Character) SWG.sendTell(from, "Hi!");
+}
+
+SWG.queueSoftLog = function() {
+    setTimeout(SWG.softLog, softLogInterval);
+}
+
+SWG.softLog = function() {
+    if (chat) chat.send("chat bot soft logging").then(() => process.exit(0));
 }
 
 setInterval(() => SWG.sendTell(config.SWG.Character, "ping"), 30000);
